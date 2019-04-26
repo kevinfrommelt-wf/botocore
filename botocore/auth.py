@@ -353,6 +353,7 @@ class SigV4Auth(BaseSigner):
         return self._sign(k_signing, string_to_sign, hex=True)
 
     def add_auth(self, request):
+        logger.debug('Add auth with credentials: %s', type(self.credentials))
         if self.credentials is None:
             raise NoCredentialsError
         datetime_now = datetime.datetime.utcnow()

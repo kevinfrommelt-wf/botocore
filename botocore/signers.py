@@ -14,6 +14,7 @@ import datetime
 import weakref
 import json
 import base64
+import logging
 
 import botocore
 import botocore.auth
@@ -23,6 +24,8 @@ from botocore.exceptions import UnknownSignatureVersionError
 from botocore.exceptions import UnknownClientMethodError
 from botocore.exceptions import UnsupportedSignatureVersionError
 from botocore.utils import fix_s3_host, datetime2timestamp
+
+logger = logging.getLogger(__name__)
 
 
 class RequestSigner(object):
@@ -66,6 +69,7 @@ class RequestSigner(object):
         self._signature_version = signature_version
         self._credentials = credentials
         self._service_id = service_id
+        logger.debug('Creating signer with credentials: %s', self._credentials)
 
         # We need weakref to prevent leaking memory in Python 2.6 on Linux 2.6
         self._event_emitter = weakref.proxy(event_emitter)
